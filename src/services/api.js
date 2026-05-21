@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    "https://doc-appoint-server-vavu.onrender.com",
+    "http://localhost:5000",
 });
 
 api.interceptors.request.use(

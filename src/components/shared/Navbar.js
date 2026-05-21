@@ -2,98 +2,53 @@
 
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-
-import toast from "react-hot-toast";
-
-import { useAuth } from "@/context/AuthContext";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const { user, logout } =
-    useAuth();
+  const pathname = usePathname();
 
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-
-      localStorage.removeItem(
-        "token"
-      );
-
-      toast.success(
-        "Logout Successful"
-      );
-
-      router.push("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const navLinks = (
-    <>
-      <li>
-        <Link href="/">Home</Link>
-      </li>
-
-      <li>
-        <Link href="/all-appointments">
-          All Appointments
-        </Link>
-      </li>
-
-      <li>
-        <Link href="/dashboard">
-          Dashboard
-        </Link>
-      </li>
-    </>
-  );
+  const navLinks = [
+    {
+      name: "Home",
+      path: "/",
+    },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+    },
+    {
+      name: "All Appointments",
+      path: "/all-appointments",
+    },
+  ];
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-5 lg:px-10">
-      <div className="navbar-start">
-        <Link
-          href="/"
-          className="text-3xl font-bold text-primary"
-        >
-          DocAppoint
-        </Link>
-      </div>
-
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-lg">
-          {navLinks}
-        </ul>
-      </div>
-
-      <div className="navbar-end gap-3">
-        {user ? (
-          <button
-            onClick={handleLogout}
-            className="btn btn-error"
+    <div className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="container-width navbar py-4">
+        <div className="flex-1">
+          <Link
+            href="/"
+            className="text-3xl font-bold text-primary"
           >
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link
-              href="/login"
-              className="btn btn-primary"
-            >
-              Login
-            </Link>
+            DocAppoint
+          </Link>
+        </div>
 
+        <div className="flex items-center gap-4">
+          {navLinks.map((link) => (
             <Link
-              href="/register"
-              className="btn btn-outline"
+              key={link.path}
+              href={link.path}
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                pathname === link.path
+                  ? "bg-primary text-white shadow-lg"
+                  : "hover:bg-primary hover:text-white"
+              }`}
             >
-              Register
+              {link.name}
             </Link>
-          </>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );

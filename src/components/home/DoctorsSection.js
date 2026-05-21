@@ -26,28 +26,31 @@ export default function DoctorsSection() {
   }, []);
 
   return (
-    <div className="py-24">
+    <div className="py-28">
       <div className="container-width">
-        <div className="text-center mb-16">
+        <div className="text-center">
           <h2 className="text-5xl font-bold">
-            Explore Doctors
+            Top Rated Doctors
           </h2>
 
-          <p className="mt-5 text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="mt-6 text-lg text-gray-500 max-w-3xl mx-auto leading-8">
             Find experienced and trusted
             doctors from different
             specialties and book your
-            appointment easily.
+            appointments easily from
+            anywhere.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {doctors.map((doctor) => (
-            <DoctorCard
-              key={doctor.id}
-              doctor={doctor}
-            />
-          ))}
+        <div className="grid md:grid-cols-3 gap-10 mt-20">
+          {doctors
+            .slice(0, 3)
+            .map((doctor) => (
+              <DoctorCard
+                key={doctor.id}
+                doctor={doctor}
+              />
+            ))}
         </div>
       </div>
     </div>
