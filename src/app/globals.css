@@ -8,6 +8,17 @@
   box-sizing: border-box;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body{
   background: #f4f7fb;
+  color: #111827;
+}
+
+.container-width{
+  width: 90%;
+  max-width: 1400px;
+  margin: auto;
 }
