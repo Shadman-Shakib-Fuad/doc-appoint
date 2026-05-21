@@ -1,31 +1,56 @@
+import Link from "next/link";
+import TopDoctors from "@/components/home/TopDoctors";
+
 export default function HomePage() {
   return (
-    <div className="container-width">
-      <div className="hero min-h-[80vh]">
-        <div className="hero-content text-center">
-          <div>
-            <h1 className="text-6xl font-bold leading-tight">
-              Book Your Doctor
-              <span className="text-blue-600">
-                {" "}
-                Appointment
-              </span>
-              <br />
-              Easily Online
-            </h1>
+    <div>
+      <section className="bg-white">
+        <div className="container-width min-h-[90vh] flex items-center">
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div>
+              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+                Find Trusted
+                <span className="text-blue-600">
+                  {" "}
+                  Doctors
+                </span>
+                <br />
+                And Book Online
+              </h1>
 
-            <p className="py-8 text-lg text-gray-600 max-w-2xl mx-auto">
-              Find experienced doctors, check
-              availability, and book appointments
-              instantly from anywhere.
-            </p>
+              <p className="mt-8 text-lg text-gray-600 leading-8">
+                Easily book appointments with
+                experienced doctors anytime from
+                anywhere. Fast, secure and simple
+                healthcare solution for everyone.
+              </p>
 
-            <button className="btn btn-primary btn-lg">
-              Get Started
-            </button>
+              <div className="flex items-center gap-5 mt-10">
+                <Link
+                  href="/all-appointments"
+                  className="btn btn-primary btn-lg"
+                >
+                  Explore Doctors
+                </Link>
+
+                <button className="btn btn-outline btn-primary btn-lg">
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <img
+                src="https://i.ibb.co.com/0jqHpnp/doctor.png"
+                alt="doctor"
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <TopDoctors />
     </div>
   );
 }
