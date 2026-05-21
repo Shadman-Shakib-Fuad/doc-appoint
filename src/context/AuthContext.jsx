@@ -3,41 +3,87 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
+
+import { onAuthStateChanged } from "firebase/auth";
+
+import auth from "@/services/auth";
+
+import {
+  registerUser,
+  loginUser,
+  googleLogin,
+  logoutUser,
+} from "@/services/auth";
 
 const AuthContext =
   createContext(null);
 
-export const AuthProvider = ({
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export default function AuthProvider({
   children,
-}) => {
+}) {
   const [user, setUser] =
     useState(null);
 
-  const login = () => {
-    setUser({
-      name: "Shadman",
-      email: "user@gmail.com",
-    });
+  const [loading, setLoading] =
+    useState(true);
+
+  const createUser = (
+    email,
+    password
+  ) => {
+    return registerUser(
+      email,
+      password
+    );
+  };
+
+  const login = (email, password) => {
+    return loginUser(email, password);
+  };
+
+  const googleSignIn = () => {
+    return googleLogin();
   };
 
   const logout = () => {
-    setUser(null);
+    return logoutUser();
+  };
+
+  useEffect(() => {
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        (currentUser) => {
+          setUser(currentUser);
+
+          setLoading(false);
+        }
+      );
+
+    return () => unsubscribe();
+  }, []);
+
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    login,
+    googleSignIn,
+    logout,
   };
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        login,
-        logout,
-      }}
+      value={authInfo}
     >
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () =>
-  useContext(AuthContext);
+}

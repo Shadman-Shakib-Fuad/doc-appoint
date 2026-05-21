@@ -1,21 +1,63 @@
 "use client";
 
+import { useState } from "react";
+
 import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const { login } = useAuth();
+  const { login, googleSignIn } =
+    useAuth();
 
-  const handleLogin = (e) => {
+  const [loading, setLoading] =
+    useState(false);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    login();
+    setLoading(true);
 
-    router.push("/");
+    const form = e.target;
+
+    const email = form.email.value;
+
+    const password =
+      form.password.value;
+
+    try {
+      await login(email, password);
+
+      toast.success(
+        "Login Successful"
+      );
+
+      router.push("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
+
+    setLoading(false);
   };
+
+  const handleGoogleLogin =
+    async () => {
+      try {
+        await googleSignIn();
+
+        toast.success(
+          "Google Login Successful"
+        );
+
+        router.push("/");
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-5 py-20">
@@ -28,43 +70,35 @@ export default function LoginPage() {
           onSubmit={handleLogin}
           className="space-y-5"
         >
-          <div>
-            <label className="font-medium">
-              Email
-            </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="input input-bordered w-full"
+            required
+          />
 
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full mt-2"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="font-medium">
-              Password
-            </label>
-
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="input input-bordered w-full mt-2"
-              required
-            />
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="input input-bordered w-full"
+            required
+          />
 
           <button className="btn btn-primary w-full">
-            Login
-          </button>
-
-          <button
-            type="button"
-            className="btn w-full"
-          >
-            Continue With Google
+            {loading
+              ? "Loading..."
+              : "Login"}
           </button>
         </form>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="btn w-full mt-5"
+        >
+          Continue With Google
+        </button>
       </div>
     </div>
   );
