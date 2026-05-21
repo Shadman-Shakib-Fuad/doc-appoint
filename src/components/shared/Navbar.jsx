@@ -1,11 +1,21 @@
 "use client";
 
 import Link from "next/link";
+
 import { useState } from "react";
+
 import { HiMenuAlt3 } from "react-icons/hi";
 
+import ThemeToggle from "./ThemeToggle";
+
+import { useAuth } from "@/context/AuthContext";
+
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] =
+    useState(false);
+
+  const { user, logout } =
+    useAuth();
 
   return (
     <div className="bg-white shadow-sm sticky top-0 z-50">
@@ -39,25 +49,42 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <div className="navbar-end hidden lg:flex gap-3">
-          <Link
-            href="/login"
-            className="btn btn-outline btn-primary"
-          >
-            Login
-          </Link>
+        <div className="navbar-end hidden lg:flex gap-3 items-center">
+          <ThemeToggle />
 
-          <Link
-            href="/register"
-            className="btn btn-primary"
-          >
-            Register
-          </Link>
+          {user ? (
+            <button
+              onClick={logout}
+              className="btn btn-error text-white"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="btn btn-outline btn-primary"
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/register"
+                className="btn btn-primary"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
 
-        <div className="lg:hidden">
+        <div className="lg:hidden flex items-center gap-3">
+          <ThemeToggle />
+
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() =>
+              setOpen(!open)
+            }
             className="text-3xl"
           >
             <HiMenuAlt3 />
@@ -70,7 +97,9 @@ export default function Navbar() {
           <div className="container-width py-5">
             <ul className="flex flex-col gap-5 font-medium">
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/">
+                  Home
+                </Link>
               </li>
 
               <li>
@@ -86,19 +115,30 @@ export default function Navbar() {
               </li>
 
               <div className="flex gap-3 pt-3">
-                <Link
-                  href="/login"
-                  className="btn btn-outline btn-primary"
-                >
-                  Login
-                </Link>
+                {user ? (
+                  <button
+                    onClick={logout}
+                    className="btn btn-error text-white"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      className="btn btn-outline btn-primary"
+                    >
+                      Login
+                    </Link>
 
-                <Link
-                  href="/register"
-                  className="btn btn-primary"
-                >
-                  Register
-                </Link>
+                    <Link
+                      href="/register"
+                      className="btn btn-primary"
+                    >
+                      Register
+                    </Link>
+                  </>
+                )}
               </div>
             </ul>
           </div>

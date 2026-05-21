@@ -1,9 +1,13 @@
 import "./globals.css";
+
 import { Toaster } from "react-hot-toast";
+
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata = {
   title: "Doc Appoint",
-  description: "Doctor Appointment Booking Platform",
+  description:
+    "Doctor Appointment Booking Platform",
 };
 
 export default function RootLayout({
@@ -12,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <AuthProvider>
+          {children}
 
-        <Toaster position="top-right" />
+          <Toaster position="top-right" />
+        </AuthProvider>
       </body>
     </html>
   );
