@@ -1,69 +1,108 @@
-import doctors from "@/lib/doctors";
-import BookingModal from "@/components/home/BookingModal";
+"use client";
 
-export default function DoctorDetailsPage({
-  params,
-}) {
-  const doctor = doctors.find(
-    (item) => item.id == params.id
-  );
+import { useEffect, useState } from "react";
+
+import { useParams } from "next/navigation";
+
+import toast from "react-hot-toast";
+
+import api from "@/services/api";
+
+export default function DoctorDetailsPage() {
+  const { id } = useParams();
+
+  const [doctor, setDoctor] =
+    useState(null);
+
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      const res =
+        await api.get("/doctors");
+
+      const foundDoctor =
+        res.data.find(
+          (doc) => doc.id === Number(id)
+        );
+
+      setDoctor(foundDoctor);
+    };
+
+    fetchDoctor();
+  }, [id]);
+
+  const handleBooking = async () => {
+    const bookingData = {
+      doctorName: doctor.name,
+      specialty: doctor.specialty,
+      hospital: doctor.hospital,
+      fee: doctor.fee,
+      image: doctor.image,
+    };
+
+    const res = await api.post(
+      "/bookings",
+      bookingData
+    );
+
+    if (res.data.insertedId) {
+      toast.success(
+        "Appointment Booked Successfully"
+      );
+    }
+  };
+
+  if (!doctor) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="container-width py-20">
-      <div className="bg-white rounded-3xl p-10 shadow-lg">
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <img
-              src={doctor.image}
-              alt={doctor.name}
-              className="w-full rounded-3xl"
-            />
-          </div>
+      <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <img
+            src={doctor.image}
+            alt={doctor.name}
+            className="w-full rounded-3xl"
+          />
+        </div>
 
-          <div className="space-y-5">
-            <h1 className="text-5xl font-bold">
-              {doctor.name}
-            </h1>
+        <div>
+          <h1 className="text-5xl font-bold">
+            {doctor.name}
+          </h1>
 
-            <p className="text-2xl text-blue-600">
-              {doctor.specialty}
-            </p>
+          <p className="text-blue-600 text-2xl mt-4">
+            {doctor.specialty}
+          </p>
 
-            <p className="text-lg">
-              Experience:
-              {" "}
+          <div className="space-y-4 mt-8 text-lg">
+            <p>
+              Experience:{" "}
               {doctor.experience}
             </p>
 
-            <p className="text-lg">
-              Hospital:
-              {" "}
-              {doctor.hospital}
+            <p>
+              Hospital: {doctor.hospital}
             </p>
 
-            <p className="text-lg">
-              Consultation Fee:
-              {" "}
-              ৳{doctor.fee}
+            <p>
+              Consultation Fee: ৳
+              {doctor.fee}
             </p>
-
-            <button
-              onClick={() =>
-                document
-                  .getElementById(
-                    "booking_modal"
-                  )
-                  .showModal()
-              }
-              className="btn btn-primary btn-lg mt-5"
-            >
-              Book Appointment
-            </button>
           </div>
+
+          <button
+            onClick={handleBooking}
+            className="btn btn-primary btn-lg mt-10"
+          >
+            Book Appointment
+          </button>
         </div>
       </div>
-
-      <BookingModal />
     </div>
   );
 }

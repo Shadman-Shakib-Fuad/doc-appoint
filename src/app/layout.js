@@ -2,12 +2,12 @@ import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
 
-import { AuthProvider } from "@/context/AuthContext";
+import MainProvider from "@/provider/MainProvider";
 
 export const metadata = {
-  title: "Doc Appoint",
+  title: "DocAppoint",
   description:
-    "Doctor Appointment Booking Platform",
+    "Doctor Appointment Booking Website",
 };
 
 export default function RootLayout({
@@ -16,11 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
+        <MainProvider>
           {children}
 
           <Toaster position="top-right" />
-        </AuthProvider>
+        </MainProvider>
       </body>
     </html>
   );

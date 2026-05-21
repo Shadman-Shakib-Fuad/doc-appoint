@@ -1,4 +1,8 @@
-import bookings from "@/lib/bookings";
+"use client";
+
+import { useEffect, useState } from "react";
+
+import api from "@/services/api";
 
 import BookingCard from "@/components/dashboard/BookingCard";
 
@@ -7,6 +11,20 @@ import ProfileCard from "@/components/dashboard/ProfileCard";
 import PrivateRoute from "@/components/shared/PrivateRoute";
 
 export default function DashboardPage() {
+  const [bookings, setBookings] =
+    useState([]);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      const res =
+        await api.get("/bookings");
+
+      setBookings(res.data);
+    };
+
+    fetchBookings();
+  }, []);
+
   return (
     <PrivateRoute>
       <div className="container-width py-20">
@@ -22,7 +40,7 @@ export default function DashboardPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {bookings.map((booking) => (
               <BookingCard
-                key={booking.id}
+                key={booking._id}
                 booking={booking}
               />
             ))}
