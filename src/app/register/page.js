@@ -1,12 +1,27 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function RegisterPage() {
+  const router = useRouter();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    router.push("/login");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-5">
+    <div className="min-h-screen flex items-center justify-center px-5 py-20">
       <div className="bg-white w-full max-w-lg p-10 rounded-3xl shadow-lg">
         <h1 className="text-5xl font-bold text-center mb-10">
           Register
         </h1>
 
-        <form className="space-y-5">
+        <form
+          onSubmit={handleRegister}
+          className="space-y-5"
+        >
           <div>
             <label className="font-medium">
               Name
@@ -16,6 +31,7 @@ export default function RegisterPage() {
               type="text"
               placeholder="Enter your name"
               className="input input-bordered w-full mt-2"
+              required
             />
           </div>
 
@@ -28,6 +44,7 @@ export default function RegisterPage() {
               type="email"
               placeholder="Enter your email"
               className="input input-bordered w-full mt-2"
+              required
             />
           </div>
 
@@ -38,8 +55,9 @@ export default function RegisterPage() {
 
             <input
               type="text"
-              placeholder="Enter photo url"
+              placeholder="Enter your photo url"
               className="input input-bordered w-full mt-2"
+              required
             />
           </div>
 
@@ -52,6 +70,7 @@ export default function RegisterPage() {
               type="password"
               placeholder="Enter password"
               className="input input-bordered w-full mt-2"
+              required
             />
           </div>
 
@@ -59,16 +78,12 @@ export default function RegisterPage() {
             Register
           </button>
 
-          <button className="btn w-full">
+          <button
+            type="button"
+            className="btn w-full"
+          >
             Continue With Google
           </button>
-
-          <p className="text-center">
-            Already have an account?
-            <span className="text-blue-600 cursor-pointer ml-2">
-              Login
-            </span>
-          </p>
         </form>
       </div>
     </div>
