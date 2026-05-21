@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import doctors from "@/lib/doctors";
+import api from "@/services/api";
+
 import DoctorCard from "@/components/home/DoctorCard";
+
 import SectionTitle from "@/components/shared/SectionTitle";
 
 export default function AllAppointmentsPage() {
+  const [doctors, setDoctors] =
+    useState([]);
+
   const [search, setSearch] =
     useState("");
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      const res =
+        await api.get("/doctors");
+
+      setDoctors(res.data);
+    };
+
+    fetchDoctors();
+  }, []);
 
   const filteredDoctors =
     doctors.filter((doctor) =>
@@ -40,7 +56,7 @@ export default function AllAppointmentsPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredDoctors.map((doctor) => (
             <DoctorCard
-              key={doctor.id}
+              key={doctor._id}
               doctor={doctor}
             />
           ))}
