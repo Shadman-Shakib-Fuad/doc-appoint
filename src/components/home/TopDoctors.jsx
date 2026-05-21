@@ -1,8 +1,13 @@
 import doctors from "@/lib/doctors";
+
 import DoctorCard from "./DoctorCard";
+
 import SectionTitle from "../shared/SectionTitle";
 
 export default function TopDoctors() {
+  const topDoctors =
+    doctors.slice(0, 3);
+
   return (
     <section className="py-24">
       <div className="container-width">
@@ -12,7 +17,7 @@ export default function TopDoctors() {
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {doctors.map((doctor) => (
+          {topDoctors.map((doctor) => (
             <DoctorCard
               key={doctor.id}
               doctor={doctor}

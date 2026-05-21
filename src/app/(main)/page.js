@@ -1,5 +1,10 @@
 import Link from "next/link";
+
 import TopDoctors from "@/components/home/TopDoctors";
+
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+
+import Statistics from "@/components/home/Statistics";
 
 export default function HomePage() {
   return (
@@ -41,9 +46,9 @@ export default function HomePage() {
 
             <div>
               <img
-                src="https://i.ibb.co.com/0jqHpnp/doctor.png"
+                src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop"
                 alt="doctor"
-                className="w-full"
+                className="w-full rounded-3xl"
               />
             </div>
           </div>
@@ -51,6 +56,10 @@ export default function HomePage() {
       </section>
 
       <TopDoctors />
+
+      <WhyChooseUs />
+
+      <Statistics />
     </div>
   );
 }
