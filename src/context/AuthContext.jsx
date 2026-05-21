@@ -7,9 +7,12 @@ import {
   useState,
 } from "react";
 
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
 
-import auth from "@/services/auth";
+import app from "@/firebase/firebase.config";
 
 import {
   registerUser,
@@ -28,6 +31,8 @@ export const useAuth = () => {
 export default function AuthProvider({
   children,
 }) {
+  const auth = getAuth(app);
+
   const [user, setUser] =
     useState(null);
 
@@ -68,7 +73,7 @@ export default function AuthProvider({
       );
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   const authInfo = {
     user,

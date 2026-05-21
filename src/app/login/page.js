@@ -34,33 +34,11 @@ export default function LoginPage() {
     try {
       await login(email, password);
 
-      const tokenRes = await fetch(
-        "http://localhost:5000/jwt",
-        {
-          method: "POST",
-          headers: {
-            "content-type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            email,
-          }),
-        }
-      );
-
-      const tokenData =
-        await tokenRes.json();
-
-      localStorage.setItem(
-        "token",
-        tokenData.token
-      );
-
       toast.success(
         "Login Successful"
       );
 
-      router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       toast.error(error.message);
     }
@@ -71,47 +49,21 @@ export default function LoginPage() {
   const handleGoogleLogin =
     async () => {
       try {
-        const result =
-          await googleSignIn();
-
-        const email =
-          result.user.email;
-
-        const tokenRes = await fetch(
-          "http://localhost:5000/jwt",
-          {
-            method: "POST",
-            headers: {
-              "content-type":
-                "application/json",
-            },
-            body: JSON.stringify({
-              email,
-            }),
-          }
-        );
-
-        const tokenData =
-          await tokenRes.json();
-
-        localStorage.setItem(
-          "token",
-          tokenData.token
-        );
+        await googleSignIn();
 
         toast.success(
           "Google Login Successful"
         );
 
-        router.push("/dashboard");
+        router.push("/");
       } catch (error) {
         toast.error(error.message);
       }
     };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-5 py-20">
-      <div className="bg-white w-full max-w-lg p-10 rounded-3xl shadow-lg">
+    <div className="min-h-screen flex items-center justify-center px-5 py-20 bg-base-200">
+      <div className="bg-white w-full max-w-lg p-10 rounded-3xl shadow-2xl">
         <h1 className="text-5xl font-bold text-center mb-10">
           Login
         </h1>
@@ -145,7 +97,7 @@ export default function LoginPage() {
 
         <button
           onClick={handleGoogleLogin}
-          className="btn w-full mt-5"
+          className="btn btn-outline w-full mt-5"
         >
           Continue With Google
         </button>
