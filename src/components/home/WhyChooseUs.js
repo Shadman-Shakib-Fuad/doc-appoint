@@ -3,41 +3,58 @@ export default function WhyChooseUs() {
     {
       title: "Expert Doctors",
       description:
-        "Experienced specialists ready to provide top-quality healthcare.",
+        "Experienced and professional doctors for quality healthcare.",
     },
     {
       title: "24/7 Support",
       description:
-        "Get assistance anytime with our dedicated support team.",
+        "Dedicated support team always ready to help patients.",
     },
     {
-      title: "Easy Booking",
+      title: "Trusted Hospitals",
       description:
-        "Book appointments quickly and easily from anywhere.",
+        "Connected with trusted hospitals and healthcare centers.",
+    },
+  ];
+
+  const stats = [
+    {
+      number: "12+",
+      title: "Doctors",
+    },
+    {
+      number: "500+",
+      title: "Patients",
+    },
+    {
+      number: "99%",
+      title: "Success Rate",
     },
   ];
 
   return (
-    <div className="py-24 bg-base-200">
+    <div className="py-28 bg-base-200">
       <div className="container-width">
-        <div className="text-center mb-16">
+        <div className="text-center">
           <h2 className="text-5xl font-bold">
             Why Choose Us
           </h2>
 
-          <p className="mt-5 text-lg text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-gray-500 max-w-3xl mx-auto leading-8">
             We provide trusted healthcare
-            services with expert doctors and
-            smooth appointment booking.
+            services with experienced
+            doctors, modern hospitals, and
+            smooth appointment booking for
+            patients.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-3 gap-10 mt-16">
           {features.map(
             (feature, index) => (
               <div
                 key={index}
-                className="bg-white rounded-[30px] p-10 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3"
+                className="bg-white p-10 rounded-[30px] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3"
               >
                 <h3 className="text-3xl font-bold mb-5">
                   {feature.title}
@@ -47,6 +64,25 @@ export default function WhyChooseUs() {
                   {
                     feature.description
                   }
+                </p>
+              </div>
+            )
+          )}
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-10 mt-20">
+          {stats.map(
+            (stat, index) => (
+              <div
+                key={index}
+                className="bg-primary text-white rounded-[30px] p-10 text-center shadow-xl hover:scale-105 transition duration-500"
+              >
+                <h2 className="text-5xl font-bold">
+                  {stat.number}
+                </h2>
+
+                <p className="mt-4 text-xl">
+                  {stat.title}
                 </p>
               </div>
             )
