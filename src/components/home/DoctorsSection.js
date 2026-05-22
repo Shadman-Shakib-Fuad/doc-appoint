@@ -31,17 +31,17 @@ export default function DoctorsSection() {
   const filteredDoctors =
     doctors.filter((doctor) =>
       doctor.name
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(
           search.toLowerCase()
         )
     );
 
   return (
-    <div className="py-28">
+    <div className="py-28 bg-base-100">
       <div className="container-width">
         <div className="text-center">
-          <h2 className="text-5xl font-bold">
+          <h2 className="text-5xl font-black">
             Top Rated Doctors
           </h2>
 
@@ -69,7 +69,7 @@ export default function DoctorsSection() {
           {filteredDoctors.map(
             (doctor) => (
               <DoctorCard
-                key={doctor.id}
+                key={doctor._id}
                 doctor={doctor}
               />
             )
