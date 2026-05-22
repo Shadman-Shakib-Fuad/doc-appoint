@@ -10,6 +10,9 @@ export default function DoctorsSection() {
   const [doctors, setDoctors] =
     useState([]);
 
+  const [search, setSearch] =
+    useState("");
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -25,6 +28,15 @@ export default function DoctorsSection() {
     fetchDoctors();
   }, []);
 
+  const filteredDoctors =
+    doctors.filter((doctor) =>
+      doctor.name
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
+    );
+
   return (
     <div className="py-28">
       <div className="container-width">
@@ -37,20 +49,29 @@ export default function DoctorsSection() {
             Find experienced and trusted
             doctors from different
             specialties and book your
-            appointments easily from
-            anywhere.
+            appointments easily.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10 mt-20">
-          {doctors
-            .slice(0, 3)
-            .map((doctor) => (
-              <DoctorCard
-                key={doctor.id}
-                doctor={doctor}
-              />
-            ))}
+        <div className="flex justify-center mt-10">
+          <input
+            type="text"
+            placeholder="Search doctor..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="input input-bordered w-full max-w-xl rounded-full"
+          />
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20">
+          {filteredDoctors.map((doctor) => (
+            <DoctorCard
+              key={doctor.id}
+              doctor={doctor}
+            />
+          ))}
         </div>
       </div>
     </div>
