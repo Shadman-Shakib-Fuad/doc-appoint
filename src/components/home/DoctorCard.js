@@ -4,33 +4,36 @@ export default function DoctorCard({
   doctor,
 }) {
   return (
-    <div className="bg-white rounded-[30px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border border-gray-100">
-      <div className="p-8 flex flex-col items-center text-center">
+    <div className="bg-white rounded-[35px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-4">
+      <div className="overflow-hidden">
         <img
           src={doctor.image}
           alt={doctor.name}
-          className="w-40 h-40 rounded-full object-cover border-4 border-primary shadow-lg"
+          className="w-full h-[320px] object-cover hover:scale-110 transition-all duration-700"
         />
+      </div>
 
-        <h2 className="text-2xl font-bold mt-6">
+      <div className="p-8">
+        <span className="badge badge-primary badge-lg">
+          Available
+        </span>
+
+        <h2 className="text-3xl font-bold mt-5">
           {doctor.name}
         </h2>
 
-        <p className="text-primary font-semibold mt-2">
-          {doctor.specialty}
+        <p className="text-primary mt-3 text-lg">
+          {doctor.speciality}
         </p>
 
-        <p className="text-gray-500 mt-2">
-          {doctor.hospital}
-        </p>
-
-        <p className="font-bold text-lg mt-3">
-          Fee: ৳{doctor.fee}
+        <p className="mt-5 text-gray-500 leading-8">
+          Experienced doctor with modern
+          healthcare solutions.
         </p>
 
         <Link
           href={`/doctor-details/${doctor.id}`}
-          className="btn btn-primary mt-6 rounded-full px-8"
+          className="btn btn-primary rounded-full w-full mt-8"
         >
           View Details
         </Link>
