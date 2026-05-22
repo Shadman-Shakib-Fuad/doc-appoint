@@ -1,41 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import api from "@/services/api";
-
 import DoctorCard from "./DoctorCard";
 
 export default function DoctorsSection() {
-  const [doctors, setDoctors] =
-    useState([]);
+  const doctors = [
+    {
+      _id: "6a0f0f31d23cea73bd83f086",
+      name: "Dr. Tanvir Ahmed",
+      specialty: "Neurologist",
+      experience: "8 Years",
+      hospital: "Square Hospital",
+      fee: 1000,
+      image:
+        "https://randomuser.me/api/portraits/men/32.jpg",
+    },
 
-  const [search, setSearch] =
-    useState("");
+    {
+      _id: "6a0f0f31d23cea73bd83f087",
+      name: "Dr. Sarah Khan",
+      specialty: "Cardiologist",
+      experience: "10 Years",
+      hospital: "Apollo Hospital",
+      fee: 1200,
+      image:
+        "https://randomuser.me/api/portraits/women/44.jpg",
+    },
 
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const res =
-          await api.get("/doctors");
-
-        setDoctors(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchDoctors();
-  }, []);
-
-  const filteredDoctors =
-    doctors.filter((doctor) =>
-      doctor.name
-        ?.toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-    );
+    {
+      _id: "6a0f0f31d23cea73bd83f088",
+      name: "Dr. Rahim Islam",
+      specialty: "Dermatologist",
+      experience: "6 Years",
+      hospital: "United Hospital",
+      fee: 900,
+      image:
+        "https://randomuser.me/api/portraits/men/45.jpg",
+    },
+  ];
 
   return (
     <div className="py-28 bg-base-100">
@@ -53,27 +54,13 @@ export default function DoctorsSection() {
           </p>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <input
-            type="text"
-            placeholder="Search doctor..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-            className="input input-bordered w-full max-w-xl rounded-full"
-          />
-        </div>
-
         <div className="grid md:grid-cols-3 gap-10 mt-20">
-          {filteredDoctors.map(
-            (doctor) => (
-              <DoctorCard
-                key={doctor._id}
-                doctor={doctor}
-              />
-            )
-          )}
+          {doctors.map((doctor) => (
+            <DoctorCard
+              key={doctor._id}
+              doctor={doctor}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
 
-import toast from "react-hot-toast";
-
 import api from "@/services/api";
+
+import toast from "react-hot-toast";
 
 export default function DoctorDetailsPage() {
   const params = useParams();
@@ -20,17 +20,11 @@ export default function DoctorDetailsPage() {
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const res =
-          await api.get("/doctors");
+        const res = await api.get(
+          `/doctors/${params.id}`
+        );
 
-        const foundDoctor =
-          res.data.find(
-            (doc) =>
-              doc.id ===
-              parseInt(params.id)
-          );
-
-        setDoctor(foundDoctor);
+        setDoctor(res.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -38,46 +32,57 @@ export default function DoctorDetailsPage() {
       }
     };
 
-    fetchDoctor();
-  }, [params.id]);
+    if (params?.id) {
+      fetchDoctor();
+    }
+  }, [params]);
 
-  const handleAppointment =
-    async () => {
-      const bookingData = {
-        patientName: "Demo Patient",
-        email: "demo@gmail.com",
-        doctorName: doctor.name,
-        date: new Date()
-          .toISOString()
-          .split("T")[0],
-      };
-
-      try {
-        await api.post(
-          "/bookings",
-          bookingData
-        );
-
-        toast.success(
-          "Appointment Booked Successfully"
-        );
-      } catch (error) {
-        toast.error(
-          "Booking Failed"
-        );
-      }
+  const handleAppointment = async () => {
+    const booking = {
+      doctorName: doctor.name,
+      specialty:
+        doctor.specialty,
+      hospital:
+        doctor.hospital,
+      fee: doctor.fee,
     };
+
+    try {
+      await api.post(
+        "/bookings",
+        booking
+      );
+
+      toast.success(
+        "Appointment Booked Successfully"
+      );
+    } catch (error) {
+      console.log(error);
+
+      toast.error(
+        "Booking Failed"
+      );
+    }
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
+
+  if (!doctor) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-3xl font-bold">
+        Oops Something Went Wrong
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-base-200 py-24 px-5">
+    <div className="min-h-screen bg-base-200 py-24">
       <div className="container-width">
         <div className="bg-white rounded-[40px] shadow-xl overflow-hidden grid lg:grid-cols-2">
           <div>
@@ -88,37 +93,35 @@ export default function DoctorDetailsPage() {
             />
           </div>
 
-          <div className="p-10 lg:p-16 flex flex-col justify-center">
-            <span className="badge badge-primary badge-lg w-fit">
-              Available
-            </span>
-
-            <h1 className="text-5xl font-bold mt-6">
+          <div className="p-12 flex flex-col justify-center">
+            <h1 className="text-5xl font-black">
               {doctor.name}
             </h1>
 
-            <p className="text-xl text-primary mt-4">
-              {doctor.speciality}
+            <p className="text-primary text-2xl font-semibold mt-6">
+              {doctor.specialty}
             </p>
 
-            <p className="mt-8 text-gray-500 leading-8">
-              Experienced doctor with
-              excellent patient care and
-              modern healthcare solutions.
-            </p>
-
-            <div className="mt-10 space-y-4">
-              <p className="text-lg">
-                Experience: 8+ Years
+            <div className="space-y-5 mt-10 text-lg">
+              <p>
+                <span className="font-bold">
+                  Experience:
+                </span>{" "}
+                {doctor.experience}
               </p>
 
-              <p className="text-lg">
-                Consultation Fee: $50
+              <p>
+                <span className="font-bold">
+                  Hospital:
+                </span>{" "}
+                {doctor.hospital}
               </p>
 
-              <p className="text-lg">
-                Hospital: City Medical
-                Center
+              <p>
+                <span className="font-bold">
+                  Appointment Fee:
+                </span>{" "}
+                ৳ {doctor.fee}
               </p>
             </div>
 

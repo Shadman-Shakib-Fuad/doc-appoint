@@ -10,6 +10,9 @@ export default function AllAppointmentsPage() {
   const [doctors, setDoctors] =
     useState([]);
 
+  const [loading, setLoading] =
+    useState(true);
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -19,11 +22,21 @@ export default function AllAppointmentsPage() {
         setDoctors(res.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDoctors();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-base-200 py-24">

@@ -19,11 +19,16 @@ export default function DoctorCard({
         </h2>
 
         <p className="text-primary font-semibold mt-3">
-          {doctor.speciality}
+          {doctor.specialty}
         </p>
 
-        <p className="text-gray-500 mt-4 leading-7">
-          {doctor.education}
+        <p className="text-gray-500 mt-4">
+          {doctor.hospital}
+        </p>
+
+        <p className="text-gray-500 mt-2">
+          Experience:{" "}
+          {doctor.experience}
         </p>
 
         <div className="mt-8">
