@@ -2,67 +2,60 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white mt-24">
-      <div className="container-width py-20 grid md:grid-cols-3 gap-12">
-        <div>
-          <h2 className="text-4xl font-bold text-primary">
-            DocAppoint
-          </h2>
+    <footer className="bg-neutral text-neutral-content mt-28">
+      <div className="container-width py-20">
+        <div className="grid md:grid-cols-3 gap-16">
+          <div>
+            <h2 className="text-4xl font-black text-white">
+              DocAppoint
+            </h2>
 
-          <p className="mt-5 text-gray-400 leading-8">
-            Book appointments with
-            experienced doctors easily and
-            quickly from anywhere.
-          </p>
-        </div>
+            <p className="mt-6 text-gray-300 leading-8">
+              Trusted healthcare
+              appointment platform for
+              patients and doctors.
+            </p>
+          </div>
 
-        <div>
-          <h3 className="text-2xl font-semibold mb-6">
-            Quick Links
-          </h3>
+          <div>
+            <h3 className="text-2xl font-bold">
+              Quick Links
+            </h3>
 
-          <div className="flex flex-col gap-4 text-gray-400">
-            <Link
-              href="/"
-              className="hover:text-primary transition"
-            >
-              Home
-            </Link>
+            <div className="flex flex-col gap-4 mt-6">
+              <Link href="/">
+                Home
+              </Link>
 
-            <Link
-              href="/dashboard"
-              className="hover:text-primary transition"
-            >
-              Dashboard
-            </Link>
+              <Link href="/dashboard">
+                Dashboard
+              </Link>
 
-            <Link
-              href="/login"
-              className="hover:text-primary transition"
-            >
-              Login
-            </Link>
+              <Link href="/all-appointments">
+                Appointments
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-bold">
+              Contact
+            </h3>
+
+            <div className="space-y-4 mt-6 text-gray-300">
+              <p>Email: support@docappoint.com</p>
+
+              <p>Phone: +880123456789</p>
+
+              <p>Dhaka, Bangladesh</p>
+            </div>
           </div>
         </div>
 
-        <div>
-          <h3 className="text-2xl font-semibold mb-6">
-            Contact
-          </h3>
-
-          <div className="space-y-4 text-gray-400">
-            <p>Email: support@docappoint.com</p>
-
-            <p>Phone: +880 1234-567890</p>
-
-            <p>Location: Dhaka, Bangladesh</p>
-          </div>
+        <div className="border-t border-gray-700 mt-16 pt-8 text-center text-sm text-gray-400">
+          © 2026 DocAppoint. All rights
+          reserved.
         </div>
-      </div>
-
-      <div className="border-t border-gray-800 py-6 text-center text-gray-500">
-        © 2026 DocAppoint. All Rights
-        Reserved.
       </div>
     </footer>
   );
