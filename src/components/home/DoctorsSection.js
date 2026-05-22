@@ -66,14 +66,14 @@ export default function DoctorsSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-10 mt-20">
-          {filteredDoctors
-            .slice(0, 3)
-            .map((doctor) => (
+          {filteredDoctors.map(
+            (doctor) => (
               <DoctorCard
                 key={doctor.id}
                 doctor={doctor}
               />
-            ))}
+            )
+          )}
         </div>
       </div>
     </div>

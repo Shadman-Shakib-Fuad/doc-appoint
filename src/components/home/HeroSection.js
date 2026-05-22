@@ -8,16 +8,15 @@ export default function HeroSection() {
           <h1 className="text-6xl lg:text-7xl font-black leading-tight">
             Book Your{" "}
             <span className="text-primary">
-              Doctor
+              Doctor Appointment
             </span>{" "}
-            Appointment Easily
+            Easily
           </h1>
 
           <p className="mt-8 text-lg text-gray-500 leading-8 max-w-2xl">
-            Find trusted doctors, book
-            appointments instantly, and get
-            better healthcare services from
-            anywhere.
+            Find trusted doctors and book
+            appointments instantly with
+            modern healthcare solutions.
           </p>
 
           <div className="flex gap-5 mt-10">
@@ -25,7 +24,7 @@ export default function HeroSection() {
               href="/all-appointments"
               className="btn btn-primary rounded-full px-8"
             >
-              Book Now
+              Explore Doctors
             </Link>
 
             <Link
@@ -39,9 +38,9 @@ export default function HeroSection() {
 
         <div className="flex justify-center">
           <img
-            src="https://i.ibb.co.com/ZYW3VTp/brown-brim.png"
+            src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1200&auto=format&fit=crop"
             alt="Doctor"
-            className="w-full max-w-lg rounded-[40px] shadow-2xl"
+            className="w-full max-w-xl rounded-[40px] shadow-2xl object-cover h-[650px]"
           />
         </div>
       </div>

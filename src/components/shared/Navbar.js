@@ -7,23 +7,8 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname();
 
-  const navItems = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "Dashboard",
-      path: "/dashboard",
-    },
-    {
-      name: "Appointments",
-      path: "/all-appointments",
-    },
-  ];
-
   return (
-    <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-base-200">
+    <div className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="container-width navbar py-5">
         <div className="flex-1">
           <Link
@@ -35,19 +20,40 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                pathname === item.path
-                  ? "bg-primary text-white shadow-xl scale-105"
-                  : "hover:bg-primary hover:text-white"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
+          <Link
+            href="/"
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+              pathname === "/"
+                ? "bg-primary text-white"
+                : "hover:bg-primary hover:text-white"
+            }`}
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/dashboard"
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+              pathname ===
+              "/dashboard"
+                ? "bg-primary text-white"
+                : "hover:bg-primary hover:text-white"
+            }`}
+          >
+            Dashboard
+          </Link>
+
+          <Link
+            href="/all-appointments"
+            className={`px-6 py-3 rounded-full font-semibold transition-all ${
+              pathname ===
+              "/all-appointments"
+                ? "bg-primary text-white"
+                : "hover:bg-primary hover:text-white"
+            }`}
+          >
+            Appointments
+          </Link>
         </div>
       </div>
     </div>
