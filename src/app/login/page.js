@@ -2,115 +2,98 @@
 
 import { useState } from "react";
 
-import Link from "next/link";
-
 import { useRouter } from "next/navigation";
 
 import toast from "react-hot-toast";
 
-import { useAuth } from "@/context/AuthContext";
+import api from "@/services/api";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const { login, googleSignIn } =
-    useAuth();
+  const [email, setEmail] =
+    useState("");
 
-  const [loading, setLoading] =
-    useState(false);
+  const [password, setPassword] =
+    useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
-    const form = e.target;
-
-    const email = form.email.value;
-
-    const password =
-      form.password.value;
-
     try {
-      await login(email, password);
+      const user = {
+        email,
+      };
+
+      const res = await api.post(
+        "/jwt",
+        user
+      );
+
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
 
       toast.success(
         "Login Successful"
       );
 
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     } catch (error) {
-      toast.error(error.message);
-    }
+      console.log(error);
 
-    setLoading(false);
+      toast.error("Login Failed");
+    }
   };
 
-  const handleGoogleLogin =
-    async () => {
-      try {
-        await googleSignIn();
-
-        toast.success(
-          "Google Login Successful"
-        );
-
-        router.push("/");
-      } catch (error) {
-        toast.error(error.message);
-      }
-    };
-
   return (
-    <div className="min-h-screen flex items-center justify-center px-5 py-20 bg-base-200">
-      <div className="bg-white w-full max-w-lg p-10 rounded-3xl shadow-2xl">
-        <h1 className="text-5xl font-bold text-center mb-10">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 px-5">
+      <div className="bg-white shadow-2xl rounded-[35px] p-10 w-full max-w-md">
+        <h1 className="text-4xl font-black text-center">
           Login
         </h1>
 
+        <p className="text-center text-gray-500 mt-3">
+          Welcome Back
+        </p>
+
         <form
           onSubmit={handleLogin}
-          className="space-y-5"
+          className="mt-10 space-y-5"
         >
           <input
             type="email"
-            name="email"
             placeholder="Email"
-            className="input input-bordered w-full"
             required
+            value={email}
+            onChange={(e) =>
+              setEmail(
+                e.target.value
+              )
+            }
+            className="input input-bordered w-full rounded-full"
           />
 
           <input
             type="password"
-            name="password"
             placeholder="Password"
-            className="input input-bordered w-full"
             required
+            value={password}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
+            className="input input-bordered w-full rounded-full"
           />
 
-          <button className="btn btn-primary w-full">
-            {loading
-              ? "Loading..."
-              : "Login"}
+          <button className="btn btn-primary w-full rounded-full">
+            Login
           </button>
         </form>
-
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline w-full mt-5"
-        >
-          Continue With Google
-        </button>
-
-        <p className="text-center mt-6">
-          Don't have an account?{" "}
-          <Link
-            href="/register"
-            className="text-primary font-semibold"
-          >
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );

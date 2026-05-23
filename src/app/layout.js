@@ -6,18 +6,12 @@ import MainProvider from "@/provider/MainProvider";
 
 export const metadata = {
   title: "DocAppoint",
-  description:
-    "Doctor Appointment Booking Website",
+  description: "Doctor Appointment Booking Website",
 };
 
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      data-scroll-behavior="smooth"
-    >
+    <html lang="en" data-theme="light" data-scroll-behavior="smooth">
       <body>
         <MainProvider>
           {children}

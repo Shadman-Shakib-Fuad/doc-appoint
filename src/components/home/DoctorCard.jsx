@@ -1,8 +1,38 @@
+"use client";
+
 import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 export default function DoctorCard({
   doctor,
 }) {
+  const router = useRouter();
+
+  const handleViewDetails =
+    () => {
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      if (!token) {
+        toast.error(
+          "Please login first"
+        );
+
+        router.push("/login");
+
+        return;
+      }
+
+      router.push(
+        `/doctor-details/${doctor.id}`
+      );
+    };
+
   return (
     <div className="card bg-white shadow-xl hover:-translate-y-2 duration-300 rounded-3xl overflow-hidden">
       <figure className="p-5 pb-0">
@@ -43,12 +73,14 @@ export default function DoctorCard({
         </div>
 
         <div className="card-actions mt-5">
-          <Link
-            href={`/doctor-details/${doctor.id}`}
+          <button
+            onClick={
+              handleViewDetails
+            }
             className="btn btn-primary w-full rounded-full"
           >
             View Details
-          </Link>
+          </button>
         </div>
       </div>
     </div>

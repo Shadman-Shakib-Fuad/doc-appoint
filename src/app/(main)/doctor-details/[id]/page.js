@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
 
+import { useRouter } from "next/navigation";
+
 import api from "@/services/api";
 
 import toast from "react-hot-toast";
 
 export default function DoctorDetailsPage() {
   const params = useParams();
+
+  const router = useRouter();
 
   const [doctor, setDoctor] =
     useState(null);
@@ -18,6 +22,19 @@ export default function DoctorDetailsPage() {
     useState(true);
 
   useEffect(() => {
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) {
+      toast.error(
+        "Please Login First"
+      );
+
+      router.push("/login");
+
+      return;
+    }
+
     const fetchDoctor = async () => {
       try {
         const res = await api.get(
@@ -35,10 +52,10 @@ export default function DoctorDetailsPage() {
     if (params?.id) {
       fetchDoctor();
     }
-  }, [params]);
+  }, [params, router]);
 
   const handleAppointment = () => {
-    const previousAppointments =
+    const oldAppointments =
       JSON.parse(
         localStorage.getItem(
           "appointments"
@@ -46,15 +63,19 @@ export default function DoctorDetailsPage() {
       ) || [];
 
     const newAppointment = {
-      ...doctor,
-      bookedAt:
-        new Date().toLocaleString(),
+      doctorName: doctor.name,
+      specialty:
+        doctor.specialty,
+      hospital:
+        doctor.hospital,
+      fee: doctor.fee,
     };
 
-    const updatedAppointments = [
-      ...previousAppointments,
-      newAppointment,
-    ];
+    const updatedAppointments =
+      [
+        ...oldAppointments,
+        newAppointment,
+      ];
 
     localStorage.setItem(
       "appointments",
@@ -65,6 +86,10 @@ export default function DoctorDetailsPage() {
 
     toast.success(
       "Appointment Booked Successfully"
+    );
+
+    router.push(
+      "/all-appointments"
     );
   };
 
@@ -78,8 +103,8 @@ export default function DoctorDetailsPage() {
 
   if (!doctor) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-4xl font-bold">
-        Oops Something Went Wrong
+      <div className="min-h-screen flex items-center justify-center text-3xl font-bold">
+        Doctor Not Found
       </div>
     );
   }
@@ -101,7 +126,7 @@ export default function DoctorDetailsPage() {
               {doctor.name}
             </h1>
 
-            <p className="text-primary text-2xl font-semibold mt-5">
+            <p className="text-primary text-2xl font-semibold mt-6">
               {doctor.specialty}
             </p>
 
@@ -110,7 +135,9 @@ export default function DoctorDetailsPage() {
                 <span className="font-bold">
                   Experience:
                 </span>{" "}
-                {doctor.experience}
+                {
+                  doctor.experience
+                }
               </p>
 
               <p>
@@ -132,7 +159,7 @@ export default function DoctorDetailsPage() {
               onClick={
                 handleAppointment
               }
-              className="btn btn-primary rounded-full mt-12 w-full text-lg"
+              className="btn btn-primary rounded-full mt-12 w-full"
             >
               Book Appointment
             </button>
