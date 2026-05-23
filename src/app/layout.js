@@ -12,8 +12,11 @@ export default function RootLayout({
   children,
 }) {
   return (
-    <html lang="en">
-      <body className="bg-white text-black">
+    <html
+      lang="en"
+      data-theme="light"
+    >
+      <body className="bg-[#f4f7fb] text-black">
         {children}
 
         <Toaster position="top-right" />

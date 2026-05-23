@@ -71,7 +71,7 @@ export default function RegisterPage() {
         );
 
         toast.success(
-          "Successfully Registered"
+          "Successfully Registered.Now login to continue"
         );
 
         router.push("/login");
