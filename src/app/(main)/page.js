@@ -4,14 +4,18 @@ import DoctorsSection from "@/components/home/DoctorsSection";
 
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 
-export default function HomePage() {
+import BreakingNews from "@/components/home/BreakingNews";
+
+export default function Home() {
   return (
-    <div>
+    <>
       <HeroSection />
+
+      <BreakingNews />
 
       <DoctorsSection />
 
       <WhyChooseUs />
-    </div>
+    </>
   );
 }
