@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DocAppoint 🏥
 
-## Getting Started
+DocAppoint is a modern doctor appointment booking web application built with Next.js, Firebase Authentication, MongoDB, Tailwind CSS, and DaisyUI.
 
-First, run the development server:
+## 🚀 Live Features
+
+* 🔐 Firebase Authentication
+
+  * Email & Password Login/Register
+  * Google Login
+
+* 👨‍⚕️ Doctor Management
+
+  * View all doctors
+  * Doctor details page
+  * Appointment booking system
+
+* 📅 Appointment System
+
+  * Book appointments
+  * View booked appointments
+  * Clear appointments feature
+
+* 📊 Dashboard
+
+  * Total appointments
+  * Total investment tracking
+  * Recent activities
+  * Appointment history
+
+* 🎨 Modern UI/UX
+
+  * Responsive design
+  * Animated marquee section
+  * Interactive doctor cards
+  * Beautiful dashboard design
+
+## 🛠️ Technologies Used
+
+* Next.js
+* React
+* Firebase Authentication
+* MongoDB
+* Tailwind CSS
+* DaisyUI
+* React Hot Toast
+
+## 📦 Installation
+
+Clone the project:
+
+```bash
+git clone your-repo-link
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔑 Environment Variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Create a `.env.local` file and add:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_URL=your_api_url
+```
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+* `src/app` → Pages & Routes
+* `src/components` → Reusable Components
+* `src/firebase` → Firebase Configuration
+* `src/provider` → Providers
+* `src/utils` → Utility Functions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* Payment Gateway
+* Doctor Search & Filter
+* Admin Dashboard
+* Appointment Date & Time Selection
+* User Profile Management
 
-## Deploy on Vercel
+## 👨‍💻 Developed By
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Shadman
