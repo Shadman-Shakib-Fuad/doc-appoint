@@ -50,7 +50,7 @@ export default function RegisterPage() {
         await googleSignIn();
 
         toast.success(
-          "Google Login Successful"
+          "Google Login Successful.Now you can use the same email to login next time."
         );
 
         router.push("/");
