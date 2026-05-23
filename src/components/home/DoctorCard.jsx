@@ -4,7 +4,7 @@ export default function DoctorCard({
   doctor,
 }) {
   return (
-    <div className="card bg-white shadow-xl hover:-translate-y-2 duration-300">
+    <div className="card bg-white shadow-xl hover:-translate-y-2 duration-300 rounded-3xl overflow-hidden">
       <figure className="p-5 pb-0">
         <img
           src={doctor.image}
@@ -30,18 +30,22 @@ export default function DoctorCard({
 
         <div className="space-y-2 text-gray-500 mt-3">
           <p>
-            Experience: {doctor.experience}
+            Experience:{" "}
+            {doctor.experience}
           </p>
 
           <p>{doctor.hospital}</p>
 
-          <p>Consultation Fee: ৳{doctor.fee}</p>
+          <p>
+            Consultation Fee: ৳
+            {doctor.fee}
+          </p>
         </div>
 
         <div className="card-actions mt-5">
           <Link
             href={`/doctor-details/${doctor.id}`}
-            className="btn btn-primary w-full"
+            className="btn btn-primary w-full rounded-full"
           >
             View Details
           </Link>

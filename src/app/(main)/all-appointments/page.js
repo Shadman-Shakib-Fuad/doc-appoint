@@ -2,63 +2,110 @@
 
 import { useEffect, useState } from "react";
 
-import api from "@/services/api";
-
-import DoctorCard from "@/components/home/DoctorCard";
-
 export default function AllAppointmentsPage() {
-  const [doctors, setDoctors] =
+  const [appointments, setAppointments] =
     useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
-
   useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const res =
-          await api.get("/doctors");
+    const savedAppointments =
+      JSON.parse(
+        localStorage.getItem(
+          "appointments"
+        )
+      ) || [];
 
-        setDoctors(res.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDoctors();
+    setAppointments(
+      savedAppointments
+    );
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
+  const clearAppointments = () => {
+    localStorage.removeItem(
+      "appointments"
     );
-  }
+
+    setAppointments([]);
+  };
 
   return (
     <div className="min-h-screen bg-base-200 py-24">
       <div className="container-width">
         <div className="text-center">
-          <h1 className="text-5xl font-black">
-            Explore Doctors
+          <h1 className="text-6xl font-black">
+            All Appointments
           </h1>
 
-          <p className="mt-6 text-lg text-gray-500 max-w-3xl mx-auto leading-8">
-            Find specialist doctors and
-            book appointments instantly.
+          <p className="mt-6 text-lg text-gray-500">
+            Manage all your booked doctor
+            appointments easily.
           </p>
         </div>
 
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={
+              clearAppointments
+            }
+            className="btn btn-error rounded-full px-8"
+          >
+            Clear Appointments
+          </button>
+        </div>
+
         <div className="grid md:grid-cols-3 gap-10 mt-20">
-          {doctors.map((doctor) => (
-            <DoctorCard
-              key={doctor._id}
-              doctor={doctor}
-            />
-          ))}
+          {appointments.map(
+            (doctor, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-[30px] overflow-hidden shadow-lg"
+              >
+                <img
+                  src={doctor.image}
+                  alt={doctor.name}
+                  className="w-full h-[300px] object-cover"
+                />
+
+                <div className="p-8">
+                  <h2 className="text-3xl font-black">
+                    {doctor.name}
+                  </h2>
+
+                  <p className="text-primary font-semibold mt-2">
+                    {
+                      doctor.specialty
+                    }
+                  </p>
+
+                  <div className="space-y-3 mt-5 text-gray-600">
+                    <p>
+                      Experience:{" "}
+                      {
+                        doctor.experience
+                      }
+                    </p>
+
+                    <p>
+                      {
+                        doctor.hospital
+                      }
+                    </p>
+
+                    <p>
+                      Fee: ৳
+                      {doctor.fee}
+                    </p>
+
+                    <p className="text-sm text-gray-400">
+                      Booked At:{" "}
+                      {
+                        doctor.bookedAt
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

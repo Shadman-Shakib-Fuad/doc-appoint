@@ -1,73 +1,72 @@
 import {
   FaUserMd,
-  FaClock,
   FaHospital,
+  FaClock,
 } from "react-icons/fa";
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 bg-white">
+    <div className="py-32 bg-base-200">
       <div className="container-width">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold">
+        <div className="text-center">
+          <h2 className="text-6xl font-black">
             Why Choose Us
           </h2>
 
-          <p className="text-gray-500 mt-5 max-w-2xl mx-auto">
-            We provide trusted healthcare
-            services with experienced doctors
-            and fast appointment booking.
+          <p className="mt-8 text-lg text-gray-500 max-w-3xl mx-auto leading-8">
+            We provide trusted
+            healthcare services with
+            experienced doctors and
+            fast appointment booking.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-base-100 shadow-xl rounded-3xl p-10 text-center">
-            <div className="text-5xl flex justify-center text-blue-600">
-              <FaUserMd />
-            </div>
+        <div className="grid md:grid-cols-3 gap-10 mt-20">
+          <div className="bg-white rounded-[35px] p-12 text-center shadow-lg">
+            <FaUserMd className="text-6xl text-primary mx-auto" />
 
-            <h3 className="text-3xl font-bold mt-6">
+            <h3 className="text-4xl font-black mt-8">
               Expert Doctors
             </h3>
 
-            <p className="text-gray-500 mt-4">
-              Experienced and professional
-              doctors available for quality
+            <p className="mt-6 text-gray-500 leading-8">
+              Experienced and
+              professional doctors
+              available for quality
               treatment.
             </p>
           </div>
 
-          <div className="bg-base-100 shadow-xl rounded-3xl p-10 text-center">
-            <div className="text-5xl flex justify-center text-blue-600">
-              <FaClock />
-            </div>
+          <div className="bg-white rounded-[35px] p-12 text-center shadow-lg">
+            <FaClock className="text-6xl text-primary mx-auto" />
 
-            <h3 className="text-3xl font-bold mt-6">
+            <h3 className="text-4xl font-black mt-8">
               24/7 Support
             </h3>
 
-            <p className="text-gray-500 mt-4">
-              Book appointments anytime from
-              anywhere with quick support.
+            <p className="mt-6 text-gray-500 leading-8">
+              Book appointments
+              anytime from anywhere
+              with quick support.
             </p>
           </div>
 
-          <div className="bg-base-100 shadow-xl rounded-3xl p-10 text-center">
-            <div className="text-5xl flex justify-center text-blue-600">
-              <FaHospital />
-            </div>
+          <div className="bg-white rounded-[35px] p-12 text-center shadow-lg">
+            <FaHospital className="text-6xl text-primary mx-auto" />
 
-            <h3 className="text-3xl font-bold mt-6">
+            <h3 className="text-4xl font-black mt-8">
               Trusted Hospitals
             </h3>
 
-            <p className="text-gray-500 mt-4">
-              Connected with top-rated hospitals
-              for better healthcare services.
+            <p className="mt-6 text-gray-500 leading-8">
+              Connected with
+              top-rated hospitals for
+              better healthcare
+              services.
             </p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

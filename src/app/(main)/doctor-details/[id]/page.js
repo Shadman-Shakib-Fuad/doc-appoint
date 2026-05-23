@@ -37,32 +37,35 @@ export default function DoctorDetailsPage() {
     }
   }, [params]);
 
-  const handleAppointment = async () => {
-    const booking = {
-      doctorName: doctor.name,
-      specialty:
-        doctor.specialty,
-      hospital:
-        doctor.hospital,
-      fee: doctor.fee,
+  const handleAppointment = () => {
+    const previousAppointments =
+      JSON.parse(
+        localStorage.getItem(
+          "appointments"
+        )
+      ) || [];
+
+    const newAppointment = {
+      ...doctor,
+      bookedAt:
+        new Date().toLocaleString(),
     };
 
-    try {
-      await api.post(
-        "/bookings",
-        booking
-      );
+    const updatedAppointments = [
+      ...previousAppointments,
+      newAppointment,
+    ];
 
-      toast.success(
-        "Appointment Booked Successfully"
-      );
-    } catch (error) {
-      console.log(error);
+    localStorage.setItem(
+      "appointments",
+      JSON.stringify(
+        updatedAppointments
+      )
+    );
 
-      toast.error(
-        "Booking Failed"
-      );
-    }
+    toast.success(
+      "Appointment Booked Successfully"
+    );
   };
 
   if (loading) {
@@ -75,7 +78,7 @@ export default function DoctorDetailsPage() {
 
   if (!doctor) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-3xl font-bold">
+      <div className="min-h-screen flex items-center justify-center text-4xl font-bold">
         Oops Something Went Wrong
       </div>
     );
@@ -98,7 +101,7 @@ export default function DoctorDetailsPage() {
               {doctor.name}
             </h1>
 
-            <p className="text-primary text-2xl font-semibold mt-6">
+            <p className="text-primary text-2xl font-semibold mt-5">
               {doctor.specialty}
             </p>
 
@@ -129,7 +132,7 @@ export default function DoctorDetailsPage() {
               onClick={
                 handleAppointment
               }
-              className="btn btn-primary rounded-full mt-12 w-full"
+              className="btn btn-primary rounded-full mt-12 w-full text-lg"
             >
               Book Appointment
             </button>
