@@ -2,14 +2,29 @@
 
 import { useState } from "react";
 
+import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 
 import toast from "react-hot-toast";
 
 import api from "@/services/api";
 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+
+import app from "@/firebase/firebase.config";
+
 export default function LoginPage() {
   const router = useRouter();
+
+  const auth = getAuth(app);
+
+  const provider =
+    new GoogleAuthProvider();
 
   const [email, setEmail] =
     useState("");
@@ -35,19 +50,65 @@ export default function LoginPage() {
         res.data.token
       );
 
+      localStorage.setItem(
+        "userEmail",
+        email
+      );
+
       toast.success(
         "Login Successful"
       );
 
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
+      router.push("/");
     } catch (error) {
       console.log(error);
 
       toast.error("Login Failed");
     }
   };
+
+  const handleGoogleLogin =
+    async () => {
+      try {
+        const result =
+          await signInWithPopup(
+            auth,
+            provider
+          );
+
+        const user = {
+          email:
+            result.user.email,
+        };
+
+        const res = await api.post(
+          "/jwt",
+          user
+        );
+
+        localStorage.setItem(
+          "token",
+          res.data.token
+        );
+
+        localStorage.setItem(
+          "userEmail",
+          result.user.email
+        );
+
+        toast.success(
+          "Google Login Successful"
+        );
+
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+
+        toast.error(
+          "Google Login Failed"
+        );
+      }
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-5">
@@ -94,6 +155,27 @@ export default function LoginPage() {
             Login
           </button>
         </form>
+
+        <button
+          onClick={
+            handleGoogleLogin
+          }
+          className="btn btn-outline w-full rounded-full mt-5"
+        >
+          Continue With Google
+        </button>
+
+        <p className="text-center mt-6 text-gray-500">
+          Don&apos;t have an
+          account?
+        </p>
+
+        <Link
+          href="/register"
+          className="btn btn-secondary w-full rounded-full mt-3"
+        >
+          Register
+        </Link>
       </div>
     </div>
   );
