@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import api from "@/services/api";
-
 import DoctorCard from "@/components/home/DoctorCard";
 
-import toast from "react-hot-toast";
+import api from "@/services/api";
 
 export default function AllAppointmentsPage() {
   const [doctors, setDoctors] =
@@ -14,6 +12,9 @@ export default function AllAppointmentsPage() {
 
   const [appointments, setAppointments] =
     useState([]);
+
+  const [search, setSearch] =
+    useState("");
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -41,17 +42,23 @@ export default function AllAppointmentsPage() {
     );
   }, []);
 
-  const handleClear = () => {
-    localStorage.removeItem(
-      "appointments"
-    );
+  const clearAppointments =
+    () => {
+      localStorage.removeItem(
+        "appointments"
+      );
 
-    setAppointments([]);
+      setAppointments([]);
+    };
 
-    toast.success(
-      "Appointments Cleared"
+  const filteredDoctors =
+    doctors.filter((doctor) =>
+      doctor.name
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
     );
-  };
 
   return (
     <div className="min-h-screen bg-base-200 py-20">
@@ -61,31 +68,36 @@ export default function AllAppointmentsPage() {
             All Appointments
           </h1>
 
-          <p className="mt-5 text-gray-500 text-lg">
-            Your booked appointments
-            and available doctors.
+          <p className="mt-5 text-gray-500">
+            Manage your booked
+            appointments easily
           </p>
         </div>
 
-        {appointments.length >
-          0 && (
-          <div className="mt-14">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold">
-                My Appointments
-              </h2>
+        <div className="bg-white rounded-[30px] shadow-xl p-8 mt-12">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold">
+              Booked Appointments
+            </h2>
 
-              <button
-                onClick={
-                  handleClear
-                }
-                className="btn btn-error rounded-full text-white"
-              >
-                Clear Appointments
-              </button>
-            </div>
+            <button
+              onClick={
+                clearAppointments
+              }
+              className="btn btn-error rounded-full text-white"
+            >
+              Clear All
+            </button>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+          {appointments.length ===
+          0 ? (
+            <p className="text-gray-500 mt-6">
+              No appointments
+              booked yet.
+            </p>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6 mt-10">
               {appointments.map(
                 (
                   appointment,
@@ -93,7 +105,7 @@ export default function AllAppointmentsPage() {
                 ) => (
                   <div
                     key={index}
-                    className="bg-white rounded-3xl p-7 shadow-lg"
+                    className="border rounded-2xl p-6"
                   >
                     <h3 className="text-2xl font-bold">
                       {
@@ -101,50 +113,65 @@ export default function AllAppointmentsPage() {
                       }
                     </h3>
 
-                    <p className="text-primary mt-2">
+                    <p className="mt-2 text-primary">
                       {
                         appointment.specialty
                       }
                     </p>
 
-                    <div className="mt-4 text-gray-500 space-y-2">
-                      <p>
-                        {
-                          appointment.hospital
-                        }
-                      </p>
+                    <p className="mt-2 text-gray-500">
+                      {
+                        appointment.hospital
+                      }
+                    </p>
 
-                      <p>
-                        Fee: ৳
-                        {
-                          appointment.fee
-                        }
-                      </p>
-                    </div>
+                    <p className="mt-3 font-semibold">
+                      Fee: ৳
+                      {
+                        appointment.fee
+                      }
+                    </p>
                   </div>
                 )
               )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        <div className="mt-24">
-          <h2 className="text-4xl font-black text-center">
+        <div className="mt-24 text-center">
+          <h2 className="text-5xl font-black">
             Explore Doctors
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-10 mt-16">
-            {doctors.map(
-              (doctor) => (
-                <DoctorCard
-                  key={
-                    doctor._id
-                  }
-                  doctor={doctor}
-                />
+          <p className="mt-5 text-gray-500">
+            Find your desired
+            specialist doctor
+          </p>
+        </div>
+
+        <div className="flex justify-center mt-10">
+          <input
+            type="text"
+            placeholder="Search doctor..."
+            value={search}
+            onChange={(e) =>
+              setSearch(
+                e.target.value
               )
-            )}
-          </div>
+            }
+            className="input input-bordered w-full max-w-xl rounded-full"
+          />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-10 mt-16">
+          {filteredDoctors.map(
+            (doctor) => (
+              <DoctorCard
+                key={doctor._id}
+                doctor={doctor}
+              />
+            )
+          )}
         </div>
       </div>
     </div>

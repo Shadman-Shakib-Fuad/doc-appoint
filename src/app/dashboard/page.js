@@ -19,6 +19,9 @@ export default function DashboardPage() {
     );
   }, []);
 
+  const totalAppointments =
+    appointments.length;
+
   const totalSpent =
     appointments.reduce(
       (total, item) =>
@@ -26,101 +29,104 @@ export default function DashboardPage() {
       0
     );
 
+  const lastAppointment =
+    appointments[
+      appointments.length - 1
+    ];
+
   return (
-    <div className="min-h-screen bg-base-200 py-24">
+    <div className="min-h-screen bg-base-200 py-20">
       <div className="container-width">
         <div className="text-center">
-          <h1 className="text-6xl font-black">
+          <h1 className="text-5xl font-black">
             Dashboard
           </h1>
 
-          <p className="mt-6 text-lg text-gray-500">
-            Monitor your healthcare
-            activities and appointments.
+          <p className="mt-5 text-gray-500">
+            Track your activities
+            and appointments
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10 mt-20">
-          <div className="bg-white rounded-[30px] shadow-lg p-10 text-center">
-            <h2 className="text-6xl font-black text-primary">
-              {
-                appointments.length
-              }
-            </h2>
-
-            <p className="text-2xl mt-4 font-semibold">
+        <div className="grid md:grid-cols-3 gap-8 mt-16">
+          <div className="bg-white rounded-[30px] p-8 shadow-xl">
+            <h2 className="text-2xl font-bold">
               Total Appointments
+            </h2>
+
+            <p className="text-5xl font-black text-primary mt-6">
+              {
+                totalAppointments
+              }
             </p>
           </div>
 
-          <div className="bg-white rounded-[30px] shadow-lg p-10 text-center">
-            <h2 className="text-6xl font-black text-primary">
-              ৳ {totalSpent}
-            </h2>
-
-            <p className="text-2xl mt-4 font-semibold">
+          <div className="bg-white rounded-[30px] p-8 shadow-xl">
+            <h2 className="text-2xl font-bold">
               Total Investment
+            </h2>
+
+            <p className="text-5xl font-black text-primary mt-6">
+              ৳ {totalSpent}
             </p>
           </div>
 
-          <div className="bg-white rounded-[30px] shadow-lg p-10 text-center">
-            <h2 className="text-6xl font-black text-primary">
-              7 Days
+          <div className="bg-white rounded-[30px] p-8 shadow-xl">
+            <h2 className="text-2xl font-bold">
+              Last Appointment
             </h2>
 
-            <p className="text-2xl mt-4 font-semibold">
-              Weekly Activity
+            <p className="text-xl font-semibold mt-6">
+              {lastAppointment
+                ? lastAppointment.doctorName
+                : "No Data"}
             </p>
           </div>
         </div>
 
-        <div className="mt-24">
-          <h2 className="text-4xl font-black text-center">
+        <div className="bg-white rounded-[30px] p-10 shadow-xl mt-16">
+          <h2 className="text-3xl font-bold">
             Recent Activities
           </h2>
 
-          <div className="space-y-8 mt-14">
-            {appointments.map(
-              (doctor, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-[30px] p-8 shadow-lg flex items-center gap-6"
-                >
-                  <img
-                    src={doctor.image}
-                    alt={doctor.name}
-                    className="w-28 h-28 rounded-full object-cover"
-                  />
+          <div className="space-y-5 mt-8">
+            {appointments.length ===
+            0 ? (
+              <p className="text-gray-500">
+                No activities found.
+              </p>
+            ) : (
+              appointments.map(
+                (
+                  appointment,
+                  index
+                ) => (
+                  <div
+                    key={index}
+                    className="border rounded-2xl p-5 flex items-center justify-between"
+                  >
+                    <div>
+                      <h3 className="font-bold text-xl">
+                        {
+                          appointment.doctorName
+                        }
+                      </h3>
 
-                  <div>
-                    <h3 className="text-3xl font-black">
-                      {doctor.name}
-                    </h3>
+                      <p className="text-gray-500">
+                        {
+                          appointment.specialty
+                        }
+                      </p>
+                    </div>
 
-                    <p className="text-primary font-semibold mt-2">
+                    <div className="font-bold text-primary">
+                      ৳
                       {
-                        doctor.specialty
+                        appointment.fee
                       }
-                    </p>
-
-                    <p className="mt-2 text-gray-500">
-                      {
-                        doctor.hospital
-                      }
-                    </p>
-
-                    <p className="mt-2">
-                      Fee: ৳
-                      {doctor.fee}
-                    </p>
-
-                    <p className="text-sm text-gray-400 mt-2">
-                      {
-                        doctor.bookedAt
-                      }
-                    </p>
+                    </div>
                   </div>
-                </div>
+                )
               )
             )}
           </div>

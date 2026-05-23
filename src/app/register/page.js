@@ -2,25 +2,30 @@
 
 import { useState } from "react";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+
+import { auth } from "@/firebase/firebase.config";
 
 import toast from "react-hot-toast";
 
-import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  const { createUser, googleSignIn } =
-    useAuth();
-
   const [loading, setLoading] =
     useState(false);
 
-  const handleRegister = async (e) => {
+  const handleRegister = async (
+    e
+  ) => {
     e.preventDefault();
-
-    setLoading(true);
 
     const form = e.target;
 
@@ -30,63 +35,87 @@ export default function RegisterPage() {
       form.password.value;
 
     try {
-      await createUser(email, password);
+      setLoading(true);
 
-      toast.success(
-        "Registration Successful"
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
 
-      router.push("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
+      toast.success(
+        "Successfully Registered"
+      );
 
-    setLoading(false);
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+
+      toast.error(
+        "Registration Failed"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleLogin =
+  const handleGoogleRegister =
     async () => {
       try {
-        await googleSignIn();
+        const provider =
+          new GoogleAuthProvider();
 
-        toast.success(
-          "Google Login Successful.Now you can use the same email to login next time."
+        await signInWithPopup(
+          auth,
+          provider
         );
 
-        router.push("/");
+        toast.success(
+          "Successfully Registered"
+        );
+
+        router.push("/login");
       } catch (error) {
-        toast.error(error.message);
+        console.log(error);
+
+        toast.error(
+          "Google Register Failed"
+        );
       }
     };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-5 py-20">
-      <div className="bg-white w-full max-w-lg p-10 rounded-3xl shadow-lg">
-        <h1 className="text-5xl font-bold text-center mb-10">
-          Register
+    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 py-16">
+      <div className="bg-white shadow-2xl rounded-[35px] w-full max-w-md p-10">
+        <h1 className="text-4xl font-black text-center">
+          Create Account
         </h1>
+
+        <p className="text-center text-gray-500 mt-3">
+          Register to continue
+        </p>
 
         <form
           onSubmit={handleRegister}
-          className="space-y-5"
+          className="space-y-5 mt-10"
         >
           <input
             type="email"
             name="email"
             placeholder="Email"
-            className="input input-bordered w-full"
             required
+            className="input input-bordered w-full rounded-full"
           />
 
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="input input-bordered w-full"
             required
+            className="input input-bordered w-full rounded-full"
           />
 
-          <button className="btn btn-primary w-full">
+          <button className="btn btn-primary w-full rounded-full">
             {loading
               ? "Loading..."
               : "Register"}
@@ -94,11 +123,23 @@ export default function RegisterPage() {
         </form>
 
         <button
-          onClick={handleGoogleLogin}
-          className="btn w-full mt-5"
+          onClick={
+            handleGoogleRegister
+          }
+          className="btn btn-outline w-full rounded-full mt-5"
         >
           Continue With Google
         </button>
+
+        <p className="text-center mt-6 text-gray-500">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="text-primary font-semibold"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
